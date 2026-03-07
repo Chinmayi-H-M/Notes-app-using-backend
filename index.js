@@ -27,18 +27,54 @@ app.get('/file/:filename',function(req,res){
         }
     });
 })
-app.get('/edit/:filename',function(req,res){
-    res.render('edit',{filename:req.params.filename});
-})
+app.get('/edit/:filename', function(req,res){
+
+    fs.readFile(`./files/${req.params.filename}`, "utf-8", function(err,data){
+
+        res.render("edit", {
+            filename: req.params.filename,
+            details: data
+        });
+
+    });
+
+});
 
 app.post('/create',function(req,res){
     fs.writeFile(`./files/${req.body.title.split(" ").join('')}.txt`,req.body.details,function(err){
         res.redirect('/');
     });
 })
-app.post('/edit',function(req,res){
-    fs.rename(`./files/${req.body.previousName}`,`./files/${req.body.newName}`,function(err){
-        res.redirect('/');
-    })
-})
+// app.post('/edit',function(req,res){
+//     fs.rename(`./files/${req.body.previousName}`,`./files/${req.body.newName}`,function(err){
+//         res.redirect('/');
+//     })
+// })
+
+app.post('/edit', function(req,res){
+
+    let oldPath = `./files/${req.body.previousName}`;
+    let newName = req.body.newName || req.body.previousName;
+    let newPath = `./files/${newName}`;
+
+    // rename file
+    fs.rename(oldPath, newPath, function(err){
+
+        if(err){
+            console.log(err);
+        }
+
+        // update file content
+        fs.writeFile(newPath, req.body.newDetails, function(err){
+
+            if(err){
+                console.log(err);
+            }
+
+            res.redirect('/');
+        });
+
+    });
+
+});
 app.listen(3000);
