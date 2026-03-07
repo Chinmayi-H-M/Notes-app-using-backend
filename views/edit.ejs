@@ -12,7 +12,9 @@
            <form action="/edit" method="post">
                 <input class='block px-5 w-1/4 rounded-md py-2 bg-zinc-800'type="text" name="previousName" placeholder="previous name" value="<%= filename %>">
                 <input class='block mt-2  w-1/4 rounded-md px-5 py-2 resize-none bg-zinc-800'type="text" name="newName" id="" placeholder="New Name">
-                <input type="submit" class="mt-2 bg-yellow-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md" value="Rename Note">
+                <textarea class='block px-5 w-1/4 rounded-md py-2 bg-zinc-800'type="text" name="previousDetails" placeholder="previous details" value="<%= details %>"></textarea>
+                <textarea class='block mt-2  w-1/4 rounded-md px-5 py-2 resize-none bg-zinc-800'type="text" name="newDetails" id="" placeholder="New Details"></textarea>
+                <input type="submit" class="mt-2 bg-yellow-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md" value="Save changes">
             </form>
            
     </div>
